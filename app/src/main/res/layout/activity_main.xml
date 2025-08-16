@@ -71,10 +71,13 @@
             android:layout_height="wrap_content"
             android:text="@string/button_test_instagram"
             android:textSize="14sp"
-            android:textColor="#E4405F"
-            android:background="#ffffff"
-            android:padding="12dp"
-            android:layout_marginBottom="24dp" />
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#ffffff"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp"
+            android:minHeight="48dp" />
 
         <!-- X (Twitter) Webhook URL 區塊 -->
         <TextView
@@ -106,9 +109,12 @@
             android:text="@string/button_test_twitter"
             android:textSize="14sp"
             android:textColor="#1DA1F2"
-            android:background="#ffffff"
-            android:padding="12dp"
-            android:layout_marginBottom="24dp" />
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#ffffff"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp"
+            android:minHeight="48dp" />
 
         <!-- 啟用通知監聽按鈕 -->
         <Button
@@ -118,9 +124,12 @@
             android:text="@string/button_enable_notifications"
             android:textSize="16sp"
             android:textColor="#ffffff"
-            android:background="#E4405F"
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#E4405F"
             android:padding="16dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:minHeight="48dp" />
 
         <!-- 設定按鈕 -->
         <Button
@@ -130,9 +139,12 @@
             android:text="@string/button_settings"
             android:textSize="16sp"
             android:textColor="#333333"
-            android:background="#ffffff"
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#ffffff"
             android:padding="16dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:minHeight="48dp" />
 
         <!-- 使用說明 -->
         <TextView
