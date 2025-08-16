@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">Instagram通知轉發器</string>
+
+    <!-- Status messages -->
+    <string name="status_enabled">✅ 通知監聽已啟用\n正在監聽 Instagram 和 X (Twitter) 通知...</string>
+    <string name="status_disabled">❌ 需要通知監聽權限\n點擊下方按鈕開啟權限</string>
+
+    <!-- Button texts -->
+    <string name="button_enable_notifications">啟用通知監聽</string>
+    <string name="button_manage_permissions">管理權限</string>
+
+    <!-- Permission messages -->
+    <string name="permission_request_message">請開啟通知轉發器的通知存取權限</string>
+    <string name="permission_manual_guide">請前往設定 > 通知 > 通知存取權，開啟本應用的權限</string>
+
+    <!-- Test messages -->
+    <string name="test_instagram_title">📸 Instagram 測試訊息</string>
+    <string name="test_instagram_message">Instagram 通知轉發器已成功設置！</string>
+    <string name="test_twitter_title">🐦 X (Twitter) 測試訊息</string>
+    <string name="test_twitter_message">X (Twitter) 通知轉發器已成功設置！</string>
+
+    <!-- Error messages -->
+    <string name="error_instagram_webhook_empty">請輸入 Instagram Discord Webhook URL</string>
+    <string name="error_twitter_webhook_empty">請輸入 X (Twitter) Discord Webhook URL</string>
+
+    <!-- Success messages -->
+    <string name="success_instagram_test_sent">Instagram 測試訊息已發送</string>
+    <string name="success_twitter_test_sent">X (Twitter) 測試訊息已發送</string>
+
+    <!-- UI Labels -->
+    <string name="label_instagram_webhook">📸 Instagram Discord Webhook URL:</string>
+    <string name="label_twitter_webhook">🐦 X (Twitter) Discord Webhook URL:</string>
+    <string name="webhook_url_hint">https://discord.com/api/webhooks/…</string>
+    <string name="button_test_instagram">📸 測試 Instagram 訊息</string>
+    <string name="button_test_twitter">🐦 測試 X (Twitter) 訊息</string>
+
+    <!-- App description -->
+    <string name="app_title">社群通知轉發器</string>
+    <string name="app_description">自動將 Instagram 和 X (Twitter) 通知轉發到 Discord</string>
+    <string name="usage_instructions">使用說明：\n1. 分別輸入 Instagram 和 X (Twitter) 的 Discord Webhook URL\n2. 啟用通知監聽權限\n3. 開啟 Instagram 和 X (Twitter) 的通知\n4. 完成！\n\n注意：X (Twitter) 通知內容會原封不動轉發</string>
+
+    <!-- Settings page -->
+    <string name="button_settings">⚙️ Bot 設定</string>
+    <string name="settings_title">Bot 自定義設定</string>
+    <string name="instagram_bot_settings">📸 Instagram Bot 設定</string>
+    <string name="twitter_bot_settings">🐦 X (Twitter) Bot 設定</string>
+    <string name="general_settings">🔧 通用設定</string>
+
+    <!-- Settings labels -->
+    <string name="bot_name_label">Bot 名稱:</string>
+    <string name="bot_name_hint">例如: 我的 Instagram Bot</string>
+    <string name="bot_icon_label">Bot 圖示 URL:</string>
+    <string name="icon_url_hint">https://example.com/icon.png</string>
+    <string name="embed_color_label">Embed 顏色 (16進制):</string>
+    <string name="color_hex_hint">例如: E4405F</string>
+    <string name="include_title_label">顯示通知標題</string>
+    <string name="include_timestamp_label">顯示時間戳</string>
+
+    <!-- Settings buttons -->
+    <string name="save_settings">💾 儲存設定</string>
+    <string name="reset_settings">🔄 重設為預設</string>
+    <string name="settings_saved">設定已儲存！</string>
+    <string name="settings_reset">設定已重設為預設值！</string>
+
+    <!-- Default values -->
+    <string name="default_instagram_bot_name">Instagram Bot</string>
+    <string name="default_twitter_bot_name">X Bot</string>
+    <string name="default_instagram_icon_url">https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png</string>
+    <string name="default_twitter_icon_url">https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg</string>
+    <string name="default_instagram_color">E4405F</string>
+    <string name="default_twitter_color">1DA1F2</string>
+</resources>
