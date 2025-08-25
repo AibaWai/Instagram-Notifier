@@ -14,6 +14,7 @@ object NotificationSender {
 
     private const val TAG = "NotificationSender"
 
+    @Suppress("unused")
     fun sendToDiscord(webhookUrl: String, title: String, content: String, username: String = "Instagram Bot") {
         // 使用協程在背景執行緒處理網路請求
         CoroutineScope(Dispatchers.IO).launch {
@@ -192,7 +193,11 @@ object NotificationSender {
     }
 
     private fun createDiscordMessage(title: String, content: String, username: String): JSONObject {
-        val timestamp = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).format(Date())
+        // 使用當地時區的時間 - 兼容 API 21+
+        val calendar = Calendar.getInstance()
+        val datePart = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        val timePart = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)
+        val timestamp = "${datePart}T${timePart}${getTimezoneOffset()}"
 
         return JSONObject().apply {
             // 基本訊息設定
@@ -214,53 +219,43 @@ object NotificationSender {
             val safeContent = content.take(2000) // Discord 限制 2000 字符
             val safeTitle = title.take(256) // Discord embed title 限制 256 字符
 
-            // 如果內容很短且沒有特殊格式，使用簡單消息
-            if (safeContent.length <= 100 && !safeContent.contains("**") && !safeContent.contains("*")) {
-                val simpleMessage = if (safeTitle.isNotBlank()) {
-                    "🔔 **$safeTitle**\n$safeContent"
-                } else {
-                    safeContent
+            // 使用embed格式處理消息
+            val embed = JSONObject().apply {
+                if (safeTitle.isNotBlank()) {
+                    put("title", safeTitle)
                 }
-                put("content", simpleMessage.take(2000))
-            } else {
-                // 使用embed格式處理較長或格式化的消息
-                val embed = JSONObject().apply {
-                    if (safeTitle.isNotBlank()) {
-                        put("title", safeTitle)
-                    }
-                    if (safeContent.isNotBlank()) {
-                        put("description", safeContent)
-                    }
-
-                    // 根據來源設置不同顏色
-                    when {
-                        username.contains("Instagram", ignoreCase = true) -> {
-                            put("color", 0xE4405F) // Instagram品牌色
-                        }
-                        username.contains("Twitter", ignoreCase = true) || username.contains("X", ignoreCase = true) -> {
-                            put("color", 0x1DA1F2) // Twitter品牌色
-                        }
-                        else -> {
-                            put("color", 0x5865F2) // Discord 藍色
-                        }
-                    }
-
-                    put("timestamp", timestamp)
-
-                    val footer = JSONObject().apply {
-                        if (username.contains("Instagram", ignoreCase = true)) {
-                            put("text", "Instagram 通知轉發器")
-                        } else if (username.contains("Twitter", ignoreCase = true) || username.contains("X", ignoreCase = true)) {
-                            put("text", "X (Twitter) 通知轉發器")
-                        } else {
-                            put("text", "通知轉發器")
-                        }
-                    }
-                    put("footer", footer)
+                if (safeContent.isNotBlank()) {
+                    put("description", safeContent)
                 }
 
-                put("embeds", JSONArray().put(embed))
+                // 根據來源設置不同顏色
+                when {
+                    username.contains("Instagram", ignoreCase = true) -> {
+                        put("color", 0xE4405F) // Instagram品牌色
+                    }
+                    username.contains("Twitter", ignoreCase = true) || username.contains("X", ignoreCase = true) -> {
+                        put("color", 0x1DA1F2) // Twitter品牌色
+                    }
+                    else -> {
+                        put("color", 0x5865F2) // Discord 藍色
+                    }
+                }
+
+                put("timestamp", timestamp)
+
+                val footer = JSONObject().apply {
+                    if (username.contains("Instagram", ignoreCase = true)) {
+                        put("text", "Instagram 通知轉發器")
+                    } else if (username.contains("Twitter", ignoreCase = true) || username.contains("X", ignoreCase = true)) {
+                        put("text", "X (Twitter) 通知轉發器")
+                    } else {
+                        put("text", "通知轉發器")
+                    }
+                }
+                put("footer", footer)
             }
+
+            put("embeds", JSONArray().put(embed))
         }
     }
 
@@ -273,7 +268,11 @@ object NotificationSender {
         includeTimestamp: Boolean,
         platform: String
     ): JSONObject {
-        val timestamp = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).format(Date())
+        // 使用當地時區的時間 - 兼容 API 21+
+        val calendar = Calendar.getInstance()
+        val datePart = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        val timePart = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)
+        val timestamp = "${datePart}T${timePart}${getTimezoneOffset()}"
 
         return JSONObject().apply {
             // 基本設定
@@ -318,5 +317,17 @@ object NotificationSender {
 
             put("embeds", JSONArray().put(embed))
         }
+    }
+
+    /**
+     * 獲取時區偏移量，兼容 API 21+
+     */
+    private fun getTimezoneOffset(): String {
+        val calendar = Calendar.getInstance()
+        val offsetMillis = calendar.timeZone.getOffset(calendar.timeInMillis)
+        val offsetHours = offsetMillis / (1000 * 60 * 60)
+        val offsetMinutes = (offsetMillis % (1000 * 60 * 60)) / (1000 * 60)
+
+        return "%+03d:%02d".format(Locale.US, offsetHours, kotlin.math.abs(offsetMinutes))
     }
 }
