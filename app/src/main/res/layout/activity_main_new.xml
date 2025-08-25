@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 標題 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#E4405F"
+            android:gravity="center"
+            android:padding="16dp" />
+
+        <!-- 說明文字 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自動將 Instagram 和 X (Twitter) 通知轉發到 Discord\n支援多配置和關鍵字過濾"
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 狀態顯示 -->
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/status_disabled"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:background="#ffffff"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- 啟用通知監聽按鈕 -->
+        <Button
+            android:id="@+id/buttonEnable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_enable_notifications"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#E4405F"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:minHeight="48dp" />
+
+        <!-- 管理配置按鈕 -->
+        <Button
+            android:id="@+id/buttonManageConfigs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚙️ 管理配置"
+            android:textSize="16sp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#4CAF50"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:minHeight="48dp" />
+
+        <!-- 設定按鈕 -->
+        <Button
+            android:id="@+id/buttonSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_settings"
+            android:textSize="16sp"
+            android:textColor="#333333"
+            android:textStyle="bold"
+            android:background="@android:drawable/btn_default"
+            android:backgroundTint="#ffffff"
+            android:padding="16dp"
+            android:layout_marginBottom="12dp"
+            android:minHeight="48dp" />
+
+        <!-- 新功能介紹 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🎉 新功能"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✨ 支援多個配置：可以為同一平台設置多個不同的通知配置\n🔍 關鍵字過濾：只轉發包含特定關鍵字的通知\n🎨 自定義外觀：每個配置都可以設置不同的 Bot 名稱、頭像和顏色\n📋 配置管理：輕鬆添加、編輯、複製和刪除配置"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:padding="16dp"
+            android:background="#ffffff"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- 使用說明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="使用說明"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. 點擊「管理配置」添加新的通知配置\n2. 為每個配置設置 Discord Webhook URL\n3. 設置關鍵字過濾（可選）\n4. 啟用通知監聽權限\n5. 開啟 Instagram 和 X (Twitter) 的通知\n6. 完成！應用會自動根據配置轉發通知"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:padding="16dp"
+            android:background="#ffffff"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+</ScrollView>

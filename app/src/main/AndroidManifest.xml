@@ -29,6 +29,28 @@
             </intent-filter>
         </activity>
 
+        <!-- 配置列表Activity -->
+        <activity
+            android:name=".ConfigListActivity"
+            android:exported="false"
+            android:label="通知配置管理"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <!-- 配置編輯Activity -->
+        <activity
+            android:name=".ConfigEditActivity"
+            android:exported="false"
+            android:label="編輯配置"
+            android:parentActivityName=".ConfigListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ConfigListActivity" />
+        </activity>
+
         <!-- 設定Activity -->
         <activity
             android:name=".SettingsActivity"

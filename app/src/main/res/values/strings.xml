@@ -8,6 +8,8 @@
     <!-- Button texts -->
     <string name="button_enable_notifications">啟用通知監聽</string>
     <string name="button_manage_permissions">管理權限</string>
+    <string name="add_config_button">➕ 添加配置</string>
+    <string name="manage_configs_button">⚙️ 管理配置 (%d)</string>
 
     <!-- Permission messages -->
     <string name="permission_request_message">請開啟通知轉發器的通知存取權限</string>
@@ -69,4 +71,24 @@
     <string name="default_twitter_icon_url">https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg</string>
     <string name="default_instagram_color">E4405F</string>
     <string name="default_twitter_color">1DA1F2</string>
+
+    <!-- Config management -->
+    <string name="default_config_name">%s 配置</string>
+    <string name="config_platform_label">平台: %s</string>
+    <string name="config_bot_label">Bot: %s</string>
+    <string name="config_filter_label">過濾: %s</string>
+    <string name="config_webhook_missing">⚠️ 未設置 Webhook URL</string>
+    <string name="config_keywords_label">關鍵字: %s</string>
+
+    <!-- Config actions -->
+    <string name="config_enabled">已啟用 %s</string>
+    <string name="config_disabled">已禁用 %s</string>
+    <string name="delete_config_title">刪除配置</string>
+    <string name="delete_config_message">確定要刪除配置「%s」嗎？此操作無法撤銷。</string>
+    <string name="delete">刪除</string>
+    <string name="cancel">取消</string>
+    <string name="config_deleted">已刪除 %s</string>
+    <string name="webhook_url_required">請先設置 Webhook URL</string>
+    <string name="test_message_sent">測試訊息已發送</string>
+    <string name="config_duplicated">已複製配置</string>
 </resources>

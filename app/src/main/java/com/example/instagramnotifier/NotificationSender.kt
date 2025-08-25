@@ -14,6 +14,22 @@ object NotificationSender {
 
     private const val TAG = "NotificationSender"
 
+    // 新的基於配置的發送方法
+    fun sendToDiscordWithConfig(
+        config: NotificationConfig,
+        title: String,
+        content: String,
+        context: android.content.Context
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                sendToDiscordInternalWithConfig(config, title, content, context)
+            } catch (e: Exception) {
+                Log.e(TAG, "發送到Discord時發生錯誤", e)
+            }
+        }
+    }
+
     @Suppress("unused")
     fun sendToDiscord(webhookUrl: String, title: String, content: String, username: String = "Instagram Bot") {
         // 使用協程在背景執行緒處理網路請求
@@ -38,6 +54,55 @@ object NotificationSender {
                 sendToDiscordInternalWithSettings(webhookUrl, title, content, platform, context)
             } catch (e: Exception) {
                 Log.e(TAG, "發送到Discord時發生錯誤", e)
+            }
+        }
+    }
+
+    private suspend fun sendToDiscordInternalWithConfig(
+        config: NotificationConfig,
+        title: String,
+        content: String,
+        context: android.content.Context
+    ) {
+        withContext(Dispatchers.IO) {
+            try {
+                val url = URL(config.webhookUrl)
+                val connection = url.openConnection() as HttpURLConnection
+
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json; charset=utf-8")
+                connection.setRequestProperty("User-Agent", "Instagram-Notifier/1.0")
+                connection.doOutput = true
+                connection.connectTimeout = 10000
+                connection.readTimeout = 15000
+
+                // 構建基於配置的Discord消息
+                val message = createDiscordMessageFromConfig(config, title, content)
+
+                Log.d(TAG, "發送配置 JSON: ${message.toString(2)}")
+
+                val writer = OutputStreamWriter(connection.outputStream, "UTF-8")
+                writer.write(message.toString())
+                writer.flush()
+                writer.close()
+
+                val responseCode = connection.responseCode
+                if (responseCode == HttpURLConnection.HTTP_NO_CONTENT || responseCode == 200) {
+                    Log.d(TAG, "✅ 配置「${config.name}」消息成功發送到Discord")
+                } else {
+                    Log.w(TAG, "❌ 配置「${config.name}」Discord回應代碼: $responseCode")
+                    val errorStream = connection.errorStream
+                    if (errorStream != null) {
+                        val errorResponse = errorStream.bufferedReader().use { it.readText() }
+                        Log.w(TAG, "Discord錯誤回應: $errorResponse")
+                    }
+                }
+
+                connection.disconnect()
+
+            } catch (e: Exception) {
+                Log.e(TAG, "發送配置「${config.name}」到Discord時發生錯誤", e)
+                throw e
             }
         }
     }
@@ -189,6 +254,73 @@ object NotificationSender {
                 Log.e(TAG, "發送到Discord時發生錯誤", e)
                 throw e
             }
+        }
+    }
+
+    private fun createDiscordMessageFromConfig(config: NotificationConfig, title: String, content: String): JSONObject {
+        // 使用當地時區的時間 - 兼容 API 21+
+        val calendar = Calendar.getInstance()
+        val datePart = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        val timePart = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)
+        val timestamp = "${datePart}T${timePart}${getTimezoneOffset()}"
+
+        return JSONObject().apply {
+            // Bot 名稱
+            if (config.botName.isNotBlank()) {
+                put("username", config.botName.take(80)) // Discord 限制 80 字符
+            }
+
+            // Bot 圖示
+            if (config.iconUrl.isNotBlank() && config.iconUrl.startsWith("http")) {
+                put("avatar_url", config.iconUrl)
+            }
+
+            // 限制內容長度
+            val safeContent = content.take(2000) // Discord 限制 2000 字符
+            val safeTitle = title.take(256) // Discord embed title 限制 256 字符
+
+            // 使用embed格式以支援更多自定義選項
+            val embed = JSONObject().apply {
+                if (config.includeTitle && safeTitle.isNotBlank()) {
+                    put("title", safeTitle)
+                }
+                if (safeContent.isNotBlank()) {
+                    put("description", safeContent)
+                }
+
+                // 確保顏色值有效
+                val validColor = try {
+                    if (config.color.isNotBlank()) {
+                        val colorHex = config.color.removePrefix("#")
+                        val colorValue = Integer.parseInt(colorHex, 16)
+                        if (colorValue in 0x000000..0xFFFFFF) colorValue else getDefaultColor(config.platform)
+                    } else {
+                        getDefaultColor(config.platform)
+                    }
+                } catch (e: NumberFormatException) {
+                    getDefaultColor(config.platform)
+                }
+                put("color", validColor)
+
+                if (config.includeTimestamp) {
+                    put("timestamp", timestamp)
+                }
+
+                val footer = JSONObject().apply {
+                    val footerText = "${config.platform.displayName} 通知轉發器 - ${config.name}"
+                    put("text", footerText)
+                }
+                put("footer", footer)
+            }
+
+            put("embeds", JSONArray().put(embed))
+        }
+    }
+
+    private fun getDefaultColor(platform: NotificationConfig.Platform): Int {
+        return when (platform) {
+            NotificationConfig.Platform.INSTAGRAM -> 0xE4405F
+            NotificationConfig.Platform.TWITTER -> 0x1DA1F2
         }
     }
 

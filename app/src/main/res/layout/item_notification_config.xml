@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 頂部信息區域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- 平台圖示 -->
+            <ImageView
+                android:id="@+id/imageViewPlatformIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_instagram" />
+
+            <!-- 配置名稱和詳細信息 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewConfigName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="配置名稱"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333" />
+
+                <TextView
+                    android:id="@+id/textViewConfigDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="詳細信息"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:layout_marginTop="4dp" />
+
+            </LinearLayout>
+
+            <!-- 啟用開關 -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchConfigEnabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <!-- 關鍵字顯示 -->
+        <TextView
+            android:id="@+id/textViewConfigKeywords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="關鍵字: keyword1, keyword2"
+            android:textSize="12sp"
+            android:textColor="#E4405F"
+            android:layout_marginTop="8dp"
+            android:visibility="gone" />
+
+        <!-- 操作按鈕區域 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center">
+
+            <!-- 編輯按鈕 -->
+            <ImageButton
+                android:id="@+id/buttonEditConfig"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_edit"
+                android:contentDescription="編輯配置"
+                android:padding="8dp" />
+
+            <!-- 測試按鈕 -->
+            <ImageButton
+                android:id="@+id/buttonTestConfig"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_test_tube"
+                android:contentDescription="測試配置"
+                android:padding="8dp" />
+
+            <!-- 複製按鈕 -->
+            <ImageButton
+                android:id="@+id/buttonDuplicateConfig"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_copy"
+                android:contentDescription="複製配置"
+                android:padding="8dp" />
+
+            <!-- 刪除按鈕 -->
+            <ImageButton
+                android:id="@+id/buttonDeleteConfig"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_delete"
+                android:contentDescription="刪除配置"
+                android:padding="8dp"
+                android:tint="#FF5722" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
